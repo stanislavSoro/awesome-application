@@ -1,0 +1,29 @@
+.pie {
+    $pie-diameter: 70px;
+    @include border-radius($pie-diameter);
+    background-color: $blue;
+    height: $pie-diameter;
+    width: $pie-diameter;
+}
+
+.pie-legend {
+    ul {
+        list-style: none;
+        padding-left: 10px;
+        margin:0;
+    }
+    li {
+        padding-left: 5px;
+        margin-bottom: 5px;
+    }
+    li.passed:before {
+        padding-right: 5px;
+        content: "■";
+        color: $green;
+    }
+    li.not-passed:before {
+        padding-right: 5px;
+        content: "■";
+        color: $yellow;
+    }
+}

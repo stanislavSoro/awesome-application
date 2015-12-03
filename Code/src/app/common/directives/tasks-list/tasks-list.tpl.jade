@@ -1,0 +1,130 @@
+.admin-block
+	.unit-elements(ng-repeat='unit in vm.waitingRequests')
+		span(ng-bind='unit.id')
+		button(ng-click='vm.buildTask(unit)') Build
+		button(ng-click='vm.failTask(unit)') Fail Build
+		button(ng-click='vm.doUnitTest(unit)') Pass unit test
+		button(ng-click='vm.failUnitTest(unit)') Fail unit test
+		button(ng-click='vm.passFunctionalTest(unit)') Pass functional test
+		button(ng-click='vm.failFunctionalTest(unit)') Fail functional test
+
+.tasks-list
+	.task-wrapper.tasks-title
+		.task
+			.task-data-wrapper
+				.task-title-wrap
+					.task-cell(translate='COMMON.CHANGELIST') 
+					.task-cell(translate='COMMON.OWNER') 
+					.task-wide-cell(translate='COMMON.TIME') 
+					.task-build-status
+						.task-build-cell(translate='COMMON.BUILD') 
+						.task-build-cell(translate='COMMON.UNIT_TEST')
+						.task-build-cell(translate='COMMON.FUNC_TEST')
+			.task-status-data(translate='COMMON.STATUS') 
+	.task-wrapper(ng-repeat='task in vm.tasksList | orderBy:"-id"')
+		.task(ng-class='[vm.getTaskStateClass(task.state), {"expanded": task.showInformation}]')
+			.task-data-wrapper
+				.task-title-wrap(ng-click='vm.showTaskInformation(task)')
+					.task-cell(ng-bind='::task.id')
+					.task-cell(ng-bind='::task.owner')
+					.task-wide-cell
+						span(ng-bind='::task.date | date:"M / dd / yyyy"')
+						i.fa.fa-clock-o
+						span(ng-bind='::task.date | date:"h:mm a"')
+					.task-build-status
+						.task-build-cell
+							.task-circle-wrap
+								.task-circle-state(ng-if="task.build.status" ng-class="{'circle-init':task.build.status}")
+									.task-icon-wrap(ng-class="vm.getIconByState(task.build.status)")
+										i.fa
+							.task-progress-block
+								.task-progress-wrap
+									.task-progress(ng-style="{'width':((task.build.progress) || 0) + '%'}")
+						.task-build-cell
+							.task-circle-wrap
+								.task-circle-state(ng-if="task.unitTest.status" ng-class="{'circle-init':task.unitTest.status}")
+									.task-icon-wrap(ng-class="vm.getIconByState(task.unitTest.status)")
+										i.fa
+							.task-progress-block
+								.task-progress-wrap
+									.task-progress(ng-style="{'width': ((task.unitTest.progress) || 0) + '%'}")
+						.task-build-cell
+							.task-circle-wrap
+								.task-circle-state(ng-if="task.functionalTest.status" ng-class="{'circle-init':task.functionalTest.status}")
+									.task-icon-wrap(ng-class="vm.getIconByState(task.functionalTest.status)")
+										i.fa.fa-exclamation
+				.task-information.animate-show(ng-class="{'show-information':task.showInformation}")
+					.long-cell
+						.build-state-time
+							.build-state
+								span(translate='COMMON.BUILD')
+								.task-icon-wrap(ng-class="vm.getIconByState(task.build.status)")
+									i.fa
+							.build-time
+								i.fa.fa-clock-o
+								span(ng-bind='task.buildTime | date:"h:mm a"')
+						.build-types
+							.debug
+								.folder-icon
+									i.fa.fa-folder-o
+									i.fa.fa-check
+								.sub-title
+									a(href='#' translate='COMMON.DEBUG')
+							.release(ng-class="vm.getTaskStateClass(task.state)")
+								.folder-icon
+									i.fa.fa-folder-o
+									i.fa.icon-to-change
+								.sub-title
+									a(href='#' translate='COMMON.RELEASE')
+									.get-logs
+										a(href='#' translate='TASK_STATUS.GET_LOGS')
+					.short-cell
+						i.fa.fa-chevron-right.arrow
+					.long-cell(ng-class='vm.getTaskStateClass(task.unitTest.status)')
+						.test-information
+							.title
+								span(translate='COMMON.UNIT_TEST')
+								.task-icon-wrap(ng-class="vm.getIconByState(task.unitTest.status)")
+									i.fa
+							.result
+								span(ng-bind='(task.unitTest.result||0) + "%"')
+							.result-sub(ng-if='task.unitTest.status == 0')
+									span(translate='TASK_STATUS.STATUS')
+									span.result(translate='TASK_STATUS.CANT_RUN')
+						.pie(ng-if='task.unitTest.status != 0')
+						.pie-legend(ng-if='task.unitTest.status != 0')
+							ul
+								li.passed 123
+								li.not-passed 232
+								li
+									.time
+										i.fa.fa-clock-o
+										span 4.30	
+							
+					.short-cell
+						i.fa.fa-chevron-right.arrow
+					.long-cell(ng-class='vm.getTaskStateClass(task.functionalTest.status)')
+						.test-information
+							.title
+								span(translate='COMMON.FUNC_TEST')
+								.task-icon-wrap(ng-class="vm.getIconByState(task.functionalTest.status)")
+									i.fa
+							.result
+								span(ng-bind='(task.functionalTest.result||0) + "%"')
+							.result-sub(ng-if='task.functionalTest.status == 0')
+									span(translate='TASK_STATUS.STATUS')
+									span.result(translate='TASK_STATUS.CANT_RUN')
+						.pie(ng-if='task.functionalTest.status != 0')
+						.pie-legend(ng-if='task.functionalTest.status != 0')
+							ul
+								li.passed 123
+								li.not-passed 232
+								li
+									.time
+										i.fa.fa-clock-o
+										span 4.30	
+			.task-status-data
+				.task-icon-wrap(ng-class="vm.getIconByState(task.state)")
+							i.fa
+						span(translate="{{vm.getTitleByState(task.state)}}")
+			

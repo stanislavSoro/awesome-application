@@ -1,0 +1,297 @@
+@import 'tasks-mixins';
+.tasks-list {
+    $task-layout: 9;
+    $background-color-status: $gray;
+    $task-information-layout: 8;
+    $border-style: 1px solid $light-gray;
+    .tasks-title {
+        .task {
+            color: $dark-gray;
+            height: 50px;
+            font-size: $default-font-size;
+        }
+        div.task-title-wrap {
+            height: 50px;
+        }
+    }
+    .task-wrapper {
+        $border: 1px solid $light-gray;
+        border: $border;
+        border-bottom: 0;
+        &:last-child {
+            border-bottom: $border;
+        }
+    }
+    .task-status-data {
+        @include display(flex);
+        @include justify-content(center);
+        @include align-items(center);
+        .task-icon-wrap {
+            margin-right: 2px;
+        }
+    }
+    .task {
+        @include with-layout($task-layout);
+        @include display(flex);
+        border-left: 5px solid $gray;
+        color: $gray-middle-dark;
+        font-size: $small-font-size;
+        .task-data-wrapper {
+            @include flex(1);
+        }
+        .task-status-data {
+            @include span (1 of 9 last);
+        }
+        .task-title-wrap {
+            @include with-layout($task-information-layout);
+            cursor: pointer;
+            height: 65px;
+            & > div {
+                height: 100%;
+                @include display(flex);
+                @include justify-content(start);
+                @include align-items(center);
+            }
+            &:hover {
+                background-color: $very-light-gray;
+            }
+        }
+        .task-cell {
+            @include span(1 of $task-information-layout);
+            &:first-child {
+                padding-left: $cell-padding-start;
+            }
+        }
+        .task-wide-cell {
+            @include span(1.1 of $task-information-layout);
+            i {
+                margin-left: 10px;
+                margin-right: 2px;
+            }
+        }
+        .task-build-status {
+            @include span(4.9 of $task-information-layout last);
+            @include display(flex);
+            @include justify-content(start);
+            @include align-items(center);
+            .task-build-cell {
+                @include flex(1);
+                @include display(flex);
+                @include justify-content(center);
+                position: relative;
+            }
+        }
+        &.task.pending-state {
+            @include state-color($yellow);
+        }
+        &.task.success-state {
+            @include state-color($green);
+        }
+        &.task.running-state {
+            @include state-color($blue);
+        }
+        &.task.failed-state {
+            @include state-color($red);
+        }
+    }
+    @keyframes task-circle {
+        from {
+            width: 0;
+            height: 0;
+            i {
+                font-size: 0;
+            }
+        }
+        to {
+            height: $task-circle-diameter;
+            width: $task-circle-diameter;
+            i {
+                font-size: $icon-size;
+            }
+        }
+    }
+    .task-circle-wrap {
+        @include task-circle($task-circle-wrap-diameter);
+        background-color: $background-color-status;
+        .task-circle-state {
+            animation-name: task-circle;
+            animation-duration: 0.3s;
+            animation-timing-function: ease-out;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            @include task-circle($task-circle-diameter);
+            i {
+                color: white;
+                font-size: $icon-size;
+            }
+        }
+    }
+    .task-icon-wrap {
+        @include border-radius($icon-wrap-diameter);
+        @include flex-center();
+        width: $icon-wrap-diameter;
+        height: $icon-wrap-diameter;
+        &.pending {
+            border: 2px solid white;
+            i {
+                @extend .fa-ellipsis-h;
+                font-size: 12px;
+            }
+        }
+        &.running {
+            i {
+                @extend .fa-refresh;
+            }
+        }
+        &.succeeded {
+            i {
+                @extend .fa-check;
+            }
+        }
+        &.failed {
+            i {
+                @extend .fa-exclamation;
+            }
+        }
+    }
+    .task-progress-block {
+        @include display(flex);
+        @include align-items(center);
+        position: absolute;
+        left: 50%;
+        right: -50%;
+        top: 0;
+        z-index: 1;
+        height: 100%;
+        .task-progress-wrap {
+            @include display(flex);
+            @include align-items(center);
+            height: $task-progress-wrap-height;
+            width: 100%;
+            background-color: $background-color-status;
+            .task-progress {
+                @include border-radius($task-progress-height);
+                @include animation(width 0.5s ease-in infinite);
+                height: $task-progress-height;
+                width: 50%;
+                background-color: $green;
+            }
+        }
+    }
+    .task-information {
+        height: 0;
+        overflow: hidden;
+        @include display(flex);
+        &.show-information {
+            transition: height 0.2s ease-out;
+            border-top: $border-style;
+            height: $task-information-height;
+        }
+        .short-cell,
+        .long-cell {
+            @include display(flex);
+            height: 100%;
+        }
+        .short-cell {
+            @include align-items(center);
+            @include justify-content(center);
+            @include span(1 of $task-information-layout);
+            max-width: 50px;
+        }
+        .long-cell {
+            @include flex(1);
+            $padding: 20px;
+            padding-top: $padding;
+            padding-left: $padding;
+            @include align-items(flex-start);
+            @include justify-content(center);
+            @include span(2 of $task-information-layout);
+            &.inactive-state {
+                @include information-state($light-gray);
+            }
+            &.success-state {
+                @include information-state($green);
+            }
+            &.failed-state {
+                @include information-state($red);
+            }
+            &.running-state {
+                @include information-state($blue);
+            }
+            &.pending-state {
+                @include information-state($yellow);
+            }
+        }
+        .build-state {
+            margin-bottom: 10px;
+            font-size: $default-font-size;
+            @include display(flex);
+            .task-icon-wrap {
+                margin-left: 5px;
+            }
+        }
+        .build-types {
+            $margin: 20px;
+            @include display(flex);
+            @include justify-content(flex-start);
+            margin-left: $margin;
+            .debug {
+                margin-right: $margin;
+            }
+            a {
+                color: $light-blue;
+            }
+        }
+        .folder-icon {
+            $folder-block-width: 40px;
+            @include flex-center();
+            width: $folder-block-width;
+            height: $folder-block-width;
+            position: relative;
+            i.fa.fa-folder-o {
+                position: absolute;
+                left: 0;
+            }
+            i.fa-folder-o {
+                font-size: $folder-block-width;
+            }
+        }
+        .test-information {
+            @extend .build-state;
+            margin-right: 20px;
+            @include flex-direction(column);
+            .title {
+                @include display(flex);
+                margin-bottom: 10px;
+            }
+            .result {
+                font-size: $big-font-size;
+            }
+        }
+        .time {
+            i {
+                margin-right: 5px;
+            }
+        }
+        .release,
+        .debug {
+            color: $green;
+            i.icon-to-change {
+                @extend .fa-check;
+            }
+            .get-logs {
+                display: none;
+            }
+            &.failed-state {
+                color: $red;
+                i.icon-to-change {
+                    @extend .fa-times;
+                }
+                .get-logs {
+                    display: block;
+                }
+            }
+        }
+    }
+}

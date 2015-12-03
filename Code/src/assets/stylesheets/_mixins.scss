@@ -1,0 +1,12 @@
+@mixin border-radius($radius) {
+    @include border-top-radius($radius);
+    @include border-right-radius($radius);
+    @include border-bottom-radius($radius);
+    @include border-left-radius($radius);
+}
+
+@mixin flex-center() {
+    @include display(flex);
+    @include align-items(center);
+    @include justify-content(center);
+}

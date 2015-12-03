@@ -1,0 +1,65 @@
+@mixin task-circle($diameter) {
+    @include border-radius($diameter);
+    @include display(flex);
+    @include justify-content(center);
+    @include align-items(center);
+    height: $diameter;
+    width: $diameter;
+}
+
+@mixin task-icon-wrap-color($color) {
+    border-color: $color;
+    i {
+        color: $color;
+    }
+}
+
+@mixin state-color($color) {
+    border-color: $color;
+    .task-build-cell {
+        div.task-icon-wrap {
+            @include task-icon-wrap-color(white);
+        }
+    }
+    .task-circle-state {
+        background-color: $color;
+    }
+    .task-state {
+        color: $color;
+    }
+    .task-icon-wrap {
+        @include task-icon-wrap-color($color);
+    }
+    .task-progress {
+        background-color: $color;
+    }
+
+    &.expanded {
+        border-left-color: $gray;
+        .task-title-wrap {
+            color: $dark-gray;
+        }
+        .task-data-wrapper {
+            border-top: 3px solid $color;
+        }
+        .task-status-data {
+            $border: 3px solid $gray;
+            border-left: $border;
+            border-top: $border;
+            font-size: $middle-font-size;
+            color: $color;
+            background-color: $light-gray;
+        }
+    }
+}
+
+@mixin information-state($color) {
+    .test-information {
+        .result{
+            color: $color;
+        } 
+    }
+    .pie {
+        background: $color;
+    }
+}

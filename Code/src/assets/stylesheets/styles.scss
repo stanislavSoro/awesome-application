@@ -1,0 +1,34 @@
+@import "../vendors/susy/sass/susy";
+@import "../vendors/bourbon/app/assets/stylesheets/bourbon";
+@import "../vendors/font-awesome/scss/font-awesome.scss";
+@import "colors";
+@import "variables";
+@import "mixins";
+@import "elements";
+
+@import "directives";
+
+
+$susy: (
+  columns: 12, 
+  container: 100%,
+  height: 100%,
+  gutters: 0,
+  global-box-sizing: border-box
+);
+
+* {
+	font-family: sans-serif;
+	transition: 0.2s all ease-out;
+}
+
+html { box-sizing: border-box; }
+* { box-sizing: inherit; }
+
+.main {
+  @include container;
+}
+
+.admin-block {
+	margin-bottom: 20px;
+}

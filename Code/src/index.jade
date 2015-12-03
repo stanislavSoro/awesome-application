@@ -1,0 +1,40 @@
+doctype html
+html
+  - var appDomain = 'localhost';
+  - var appTitle = 'Crossover test';
+  - var appDescription = 'Crossover';
+
+  head
+    title=appTitle
+    meta(http-equiv='Content-Type', content='text/html; charset=utf-8')
+    meta(name='description', content=appDescription)
+    meta(name='google', content='notranslate')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+    meta(property='og:title', content=appTitle)
+    meta(property='og:type', content='application')
+    meta(property='og:url', content='//#{appDomain}/')
+    meta(property='og:description', content=appDescription)
+    
+    link(rel='stylesheet', type='text/css', href='/stylesheets/styles.css?#{uniqueId}')
+
+    <!-- injector:bower:css -->
+    <!-- endinjector -->
+
+    <!-- injector:css -->
+    <!-- endinjector -->
+
+    - if (liveReloadPort) // enable live reload in development mode
+        script(src='//localhost:#{liveReloadPort}/livereload.js')
+
+    //- if (!isDevMode) // add app.js only in production
+      script(src='/js/app.js?#{uniqueId}')
+
+  body(ng-app='crossoverApp')
+    .main(ui-view)
+    <!-- injector:bower:js -->
+    <!-- endinjector -->
+    <!-- injector:js -->
+    <!-- endinjector -->
+
+    - if (isDevMode) // add templates.js file in development mode
+        script(src='/tmp/templates.js?#{uniqueId}')

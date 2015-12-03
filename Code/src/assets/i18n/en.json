@@ -1,0 +1,24 @@
+{
+	"COMMON": {
+		"CHANGELIST": "Changelist",
+		"OWNER": "Owner",
+		"TIME": "Time started",
+		"UNIT_TEST": "Unit test",
+		"FUNC_TEST": "Functional test",
+		"BUILD": "Build",
+		"STATUS": "Status",
+		"DEBUG": "Debug",
+		"RELEASE": "Release"
+	},
+	"TASK_STATE": {
+		"PENDING": "Pending",
+		"RUNNING": "Running",
+		"PASSED": "Passed",
+		"FAILED": "Failed"
+	},
+	"TASK_STATUS": {
+		"STATUS": "Status:",
+		"CANT_RUN": "Can't run",
+		"GET_LOGS": "Get logs"
+	}
+}

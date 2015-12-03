@@ -1,0 +1,16 @@
+$default-font-size: 16px;
+$small-font-size: 13px;
+$middle-font-size: 19px;
+$big-font-size: 22px;
+
+$cell-padding-start: 30px;
+
+$task-circle-wrap-diameter: 38px;
+$task-circle-diameter: $task-circle-wrap-diameter - 10px;
+$task-information-height: 110px;
+
+$icon-size: 18px;
+$icon-wrap-diameter: $icon-size;
+
+$task-progress-wrap-height: 10px;
+$task-progress-height: $task-progress-wrap-height - 6px;
